@@ -2,6 +2,11 @@
 #include <string.h>
 #include "tail.h"
 #include "error.h"
+#include <stdbool.h>
+
+bool cbuf_empty(cbuf *cb) {
+    return cb->count == 0;
+}
 
 cbuf* cbuf_create(int n) {
     cbuf *cb = malloc(sizeof(cbuf));
@@ -15,6 +20,7 @@ cbuf* cbuf_create(int n) {
             cb->count = 0;
             cb->rindex = 0;
             cb->windex = 0;
+            cb->size = n;
         }
     } else {
         error_exit("Failed to allocate cbuf structure.");
@@ -24,8 +30,17 @@ cbuf* cbuf_create(int n) {
 }
 
 void cbuf_put(cbuf *cb, char *line) {
-    strncpy(cb->lines[cb->windex%10], line, MAX_LINE_SIZE);
+    strncpy(cb->lines[cb->windex%cb->size], line, MAX_LINE_SIZE-1);
+    cb->lines[cb->windex%cb->size][MAX_LINE_SIZE-1] = '\0';
+
+    if(!cbuf_empty && (cb->windex%cb->size) == cb->rindex%cb->size)
+        cb->rindex++;
+
     cb->windex++;
+}
+
+char* cbuf_get(cbuf *cb) {
+    if(cb->rindex == cb->windex)
 }
 
 int main() {

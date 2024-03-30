@@ -3,10 +3,16 @@
 
 #define MAX_LINE_SIZE 2047
 
+/**
+ * @brief cyclic buffer structure, that stores N elements of lines, read index, write index,
+ * and size of buffer
+ *
+ */
 typedef struct tcbuf {
     char (*lines)[MAX_LINE_SIZE];
     int windex;
     int rindex;
+    int size;
     int count;
 } cbuf;
 
@@ -26,7 +32,28 @@ cbuf* cbuf_create(int n);
  */
 void cbuf_put(cbuf *cb, char *line);
 
+/**
+ * @brief function gets a line written in read_index position and returns it
+ * 
+ * @param cb cyclic buffer structure
+ * @return char* line that is stored in read_index position
+ */
 char* cbuf_get(cbuf *cb);
+
+/**
+ * @brief function frees allocated cyclic buffer structure
+ * 
+ * @param cb cyclic buffer structure
+ */
 void cbuf_free(cbuf *cb);
+
+/**
+ * @brief function checks if buffer of cbuf structure is empty or not
+ * 
+ * @param cb cyclic buffer structure
+ * @return true if write index is 0
+ * @return false if write index is not 0
+ */
+bool cbuf_empty(cbuf *cb);
 
 #endif // CBUF_H
