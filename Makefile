@@ -4,7 +4,7 @@ EXECUTABLE = tail
 
 all: $(EXECUTABLE)
 
-tail: tail.o
+tail: tail.o error.o
 	$(CC) $(CFLAGS) -o $@ $^
 
 tail.o: tail.c tail.h
