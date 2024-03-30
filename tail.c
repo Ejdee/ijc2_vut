@@ -52,16 +52,16 @@ char* cbuf_get(cbuf *cb) {
 }
 
 void cbuf_free(cbuf* cb) {
-    for(int i = 0; i < cb->size; i++) {
-        free(cb->lines[i]);
-    }
-
+    free(cb->lines);
     free(cb);
 }
 
 int main(int argc, char *argv[]) {
     int size = 10;
-    char input[MAX_FILE_NAME_LENGTH] = "stdin";
+    FILE *fp = stdin;
+
+    if(argc > 4)
+        error_exit("Wrong arguments.");
 
     for(int i = 1; i < argc; i++) {
         if(strcmp("-n", argv[i]) == 0) {
@@ -72,17 +72,31 @@ int main(int argc, char *argv[]) {
                 error_exit("Wrong arguments.");
             }
         } else {
-            if(strcmp(input, "stdin") != 0) {
+            if(fp != stdin) {
                 error_exit("Wrong arguments.");
             }
-            strcpy(input, argv[i]);
+            fp = fopen(argv[i], "r");
+            if(fp == NULL) {
+                error_exit("Failed to open file %s.", argv[i]);
+            }
         }
     }
 
-    printf("%s\n", input);
-    printf("%d\n", size);
+    cbuf* cb = cbuf_create(size);
 
-//    cbuf* cb_test = cbuf_create(size);
+    char line[MAX_LINE_SIZE];
+    while(fgets(line, MAX_LINE_SIZE, fp) != NULL) {
+        cbuf_put(cb, line);
+    }
+
+    for(int i = 0; i < size; i++) {
+        printf("%s", cbuf_get(cb));
+    }
+
+    cbuf_free(cb);
+
+    if(fp != stdin)
+        fclose(fp);
 
     return 0;
 }
