@@ -31,6 +31,9 @@ cbuf* cbuf_create(int n) {
 
 void cbuf_put(cbuf *cb, char *line) {
 
+    if(strlen(line) > MAX_LINE_SIZE)
+        fprintf(stderr, "Line is too long, it is printed out cut on 2047 characters.\n");
+
     // copy the line in the buffer at the current write index. to ensure that the line does not exceed the maximum length of buffer size,
     // we copy at most MAX_LINE_SIZE - 1 characters, and we add null terminator character at the end.
     strncpy(cb->lines[cb->windex], line, MAX_LINE_SIZE-1);

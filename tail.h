@@ -4,7 +4,6 @@
 #define CBUF_H
 
 #define MAX_LINE_SIZE 2047
-#define MAX_FILE_NAME_LENGTH 256
 
 /**
  * @brief cyclic buffer structure, that stores N elements of lines, read index, write index,
