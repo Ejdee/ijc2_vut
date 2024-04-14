@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -g -std=c11 -pedantic -Wall -Wextra
 EXECUTABLE = tail htab_main
-HTAB_OBJECTS = htab_init.o htab_size.o htab_bucket_size.o htab_find.o htab_lookup_add.o htab_hash_function.o htab_erase.o
+HTAB_OBJECTS = htab_init.o htab_size.o htab_bucket_size.o htab_find.o htab_lookup_add.o htab_hash_function.o htab_erase.o htab_free.o htab_clear.o
 
 all: $(EXECUTABLE)
 
