@@ -10,9 +10,12 @@ bool htab_erase(htab_t * t, htab_key_t key) {
     htab_item_t *prev = NULL;
     while(temp != NULL) {
         if(strcmp(temp->pair.key, key) == 0) {
-            prev->next = temp->next;
+            if(prev == NULL) { // if the key is on the first position
+                t->ptr[position] = temp->next; // update the first item of the list
+            } else {
+                prev->next = temp->next;
+            }
             temp->next = NULL;
-            free(temp->pair);
             free(temp);
             return true;
         } else {
@@ -20,4 +23,5 @@ bool htab_erase(htab_t * t, htab_key_t key) {
             temp = temp->next;
         }
     }
+    return false;
 }
