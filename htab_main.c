@@ -8,10 +8,15 @@ int main() {
     htab_t *my_table = htab_init(20); 
 
     char *key = "adam";
-    htab_lookup_add(my_table, key);
+    htab_pair_t *added = htab_lookup_add(my_table, key);
+    printf("%s\n", added->key);
 
     for(int i = 0; i < 20; i++) {
-        printf("%d: %p\n", i+1, (void*)my_table->ptr[i]);
+        if(my_table->ptr[i] != NULL) {
+            printf("%d: %s\n", i+1, my_table->ptr[i]->pair.key);
+        } else {
+            printf("%d: %p\n", i+1, (void*)my_table->ptr[i]);
+        }
     }
 
 
