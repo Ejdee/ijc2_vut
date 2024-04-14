@@ -11,7 +11,7 @@ htab_pair_t * htab_lookup_add(htab_t * t, htab_key_t key) {
 
     htab_item_t *temp = t->ptr[position];
     htab_item_t *previous = NULL;
-    while(temp->next != NULL) {
+    while(temp != NULL) {
         if(strcmp(temp->pair.key, key) == 0) {
             temp->pair.value ++;
             return &temp->pair;
@@ -31,6 +31,12 @@ htab_pair_t * htab_lookup_add(htab_t * t, htab_key_t key) {
     new_item->pair.value = 1; // set the value to 1
     new_item->next = NULL; // set the next pointer to NULL
 
-    previous->next = new_item; // set the previous item to point to new item
+
+    if(previous == NULL) {
+        // if it is first item on the position, make it a head in the list
+        t->ptr[position] = new_item;
+    } else {
+        previous->next = new_item; // set the previous item to point to new item
+    }
     return &new_item->pair;
 }
