@@ -1,0 +1,5 @@
+error.o: error.c error.h
+htab_hash_function.o: htab_hash_function.c htab.h
+htab_init.o: htab_init.c htab.h htab_struct.h htab_item.h
+htab_main.o: htab_main.c htab.h htab_struct.h htab_item.h
+tail.o: tail.c error.h

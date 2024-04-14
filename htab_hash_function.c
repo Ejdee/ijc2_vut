@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include "htab.h"
 
 size_t htab_hash_function(const char *str) {

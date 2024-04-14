@@ -7,8 +7,6 @@
 
 #include <string.h>     // size_t
 #include <stdbool.h>    // bool
-#include <ctype.h>
-#include "htab_item.h"
 
 // Tabulka:
 struct htab;    // neúplná deklarace struktury - uživatel nevidí obsah

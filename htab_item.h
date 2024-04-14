@@ -6,8 +6,8 @@
 #include "htab.h"
 
 typedef struct htab_item {
-    struct htab_item *next;
     htab_pair_t pair;
+    struct htab_item *next;
 } htab_item_t;
 
 #endif // HTAB_ITEM_H
