@@ -1,13 +1,41 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "tail.h"
 #include "error.h"
+#include <stdbool.h>
 
+#define MAX_LINE_SIZE 2047
+
+/**
+ * @brief cyclic buffer structure, that stores N elements of lines, read index, write index,
+ * and size of buffer
+ *
+ */
+typedef struct tcbuf {
+    char (*lines)[MAX_LINE_SIZE];
+    int windex;
+    int rindex;
+    int size;
+    int count;
+} cbuf;
+
+/**
+ * @brief function checks if buffer of cbuf structure is empty or not
+ * 
+ * @param cb cyclic buffer structure
+ * @return true if write index is 0
+ * @return false if write index is not 0
+ */
 bool cbuf_empty(cbuf *cb) {
     return cb->count == 0; // if count of lines in the buffer is zero, then the buffer is empty
 }
 
+/**
+ * @brief function creates and allocates space for cbuf and return pointer to it
+ * 
+ * @param n number of lines, we want to track
+ * @return cbuf* created cbuf structure
+ */
 cbuf* cbuf_create(int n) {
     cbuf *cb = malloc(sizeof(cbuf)); // allocate memory for structure
 
@@ -29,6 +57,12 @@ cbuf* cbuf_create(int n) {
     return cb;
 }
 
+/**
+ * @brief function puts read line to position where write_index is pointing
+ * 
+ * @param cb cyclic buffer structure
+ * @param line read line
+ */
 void cbuf_put(cbuf *cb, char *line) {
 
     if(strlen(line) > MAX_LINE_SIZE)
@@ -47,6 +81,12 @@ void cbuf_put(cbuf *cb, char *line) {
     cb->count ++; // increment number of lines in the buffer
 }
 
+/**
+ * @brief function gets a line written in read_index position and returns it
+ * 
+ * @param cb cyclic buffer structure
+ * @return char* line that is stored in read_index position
+ */
 char* cbuf_get(cbuf *cb) {
     if(cbuf_empty(cb))
         error_exit("Buffer is empty.");
@@ -58,6 +98,11 @@ char* cbuf_get(cbuf *cb) {
     return to_return;
 }
 
+/**
+ * @brief function frees allocated cyclic buffer structure
+ * 
+ * @param cb cyclic buffer structure
+ */
 void cbuf_free(cbuf* cb) {
     free(cb->lines);
     free(cb);
