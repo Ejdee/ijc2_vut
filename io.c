@@ -20,5 +20,9 @@ int read_word(char *s, int max, FILE *f) {
         position ++; // increment the position so we can detect that we cut the word
     }
 
+    if(c == EOF) {
+        return -1;
+    }
+
     return position;
 }

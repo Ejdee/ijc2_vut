@@ -11,8 +11,9 @@ int main() {
     char s[len];
     bool warning = false;
  
-    for(int i = 0; i < 15; i++) {
-        int length = read_word(s, len-1, fp);
+    int length = 0;
+    while(length != -1) {
+        length = read_word(s, len-1, fp);
         if(length > 254 && !warning) {
             fprintf(stderr, "The word exceeded the limit for length. CUT.\n");
             warning = true;

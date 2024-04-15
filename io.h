@@ -6,8 +6,6 @@
 #include <ctype.h>
 #include <stdbool.h>
 
-#define MAX_WORD_LENGTH 255
-
 int read_word(char *s, int max, FILE *f);
 
-#endif
+#endif // IO_H__
