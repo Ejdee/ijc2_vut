@@ -3,6 +3,28 @@
 #include "htab_struct.h"
 #include "htab_item.h"
 
+void print_table(htab_t *table) {
+    for(int i = 0; i < table->arr_size; i++) {
+        printf("%d:", i+1);
+        if(table->ptr[i] != NULL) {
+            htab_item_t *temp = table->ptr[i];
+            while(temp != NULL) {
+                printf(" --> (%s, %d)", table->ptr[i]->pair.key, table->ptr[i]->pair.value);
+                temp = temp->next;
+            }
+            printf(" --> %p\n", (void*)temp);
+        } else {
+            printf(" --> %p\t", (void*)table->ptr[i]);
+            printf("\n");
+        }
+    }
+}
+
+void print_pair(htab_pair_t *data) {
+    char *new = "test";
+    data->key = new;
+    printf("%d: %s\n", data->value, data->key);
+}
 
 int main() {
     htab_t *my_table = htab_init(20); 
@@ -32,21 +54,13 @@ int main() {
     else
         printf("False\n");
 
+    print_table(my_table);
 
-    for(int i = 0; i < 20; i++) {
-        printf("%d:", i+1);
-        if(my_table->ptr[i] != NULL) {
-            htab_item_t *temp = my_table->ptr[i];
-            while(temp != NULL) {
-                printf(" --> (%s, %d)", my_table->ptr[i]->pair.key, my_table->ptr[i]->pair.value);
-                temp = temp->next;
-            }
-            printf(" --> %p\n", (void*)temp);
-        } else {
-            printf(" --> %p\t", (void*)my_table->ptr[i]);
-            printf("\n");
-        }
-    }
+    printf("\n---------------------------------\n");
+    htab_for_each(my_table, *print_pair);
+    printf("---------------------------------\n");
+
+    print_table(my_table);
 
     htab_statistics(my_table);
 
@@ -58,20 +72,7 @@ int main() {
 
     htab_clear(my_table);
 
-    for(int i = 0; i < 20; i++) {
-        printf("%d:", i+1);
-        if(my_table->ptr[i] != NULL) {
-            htab_item_t *temp = my_table->ptr[i];
-            while(temp != NULL) {
-                printf(" --> (%s, %d)\t", my_table->ptr[i]->pair.key, my_table->ptr[i]->pair.value);
-                temp = temp->next;
-            }
-            printf("\n");
-        } else {
-            printf(" --> %p\t", (void*)my_table->ptr[i]);
-            printf("\n");
-        }
-    }
+    print_table(my_table);
 
     htab_statistics(my_table);
 
