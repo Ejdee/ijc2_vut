@@ -1,9 +1,15 @@
 CC = gcc
-CFLAGS = -g -std=c11 -pedantic -Wall -Wextra
+CFLAGS = -g -std=c11 -pedantic -Wall -Wextra -fPIC
 EXECUTABLE = tail htab_main io_test
 HTAB_OBJECTS = htab_init.o htab_size.o htab_bucket_size.o htab_find.o htab_lookup_add.o htab_hash_function.o htab_erase.o htab_free.o htab_clear.o htab_statistics.o htab_for_each.o
 
-all: $(EXECUTABLE)
+all: $(EXECUTABLE) libhtab.a libhtab.so
+
+libhtab.a: $(HTAB_OBJECTS)
+	ar rcs $@ $^
+
+libhtab.so: $(HTAB_OBJECTS)
+	$(CC) -shared -fPIC $^ -o $@
 
 tail: tail.o error.o
 	$(CC) $(CFLAGS) -o $@ $^
@@ -18,6 +24,6 @@ io_test: io_test.o io.o
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f *.o $(EXECUTABLE)
+	rm -f *.o $(EXECUTABLE) *.a *.so
 
 -include deps
