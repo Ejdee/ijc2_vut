@@ -1,5 +1,13 @@
 error.o: error.c error.h
+htab_bucket_size.o: htab_bucket_size.c htab_struct.h htab.h htab_item.h
+htab_clear.o: htab_clear.c htab_struct.h htab.h htab_item.h
+htab_erase.o: htab_erase.c htab_struct.h htab.h htab_item.h
+htab_find.o: htab_find.c htab.h htab_struct.h htab_item.h
+htab_free.o: htab_free.c htab_struct.h htab.h htab_item.h
 htab_hash_function.o: htab_hash_function.c htab.h
 htab_init.o: htab_init.c htab.h htab_struct.h htab_item.h
+htab_lookup_add.o: htab_lookup_add.c htab_struct.h htab.h htab_item.h
 htab_main.o: htab_main.c htab.h htab_struct.h htab_item.h
+htab_size.o: htab_size.c htab_struct.h htab.h htab_item.h
+htab_statistics.o: htab_statistics.c htab_struct.h htab.h htab_item.h
 tail.o: tail.c error.h
