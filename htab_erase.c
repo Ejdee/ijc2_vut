@@ -17,6 +17,8 @@ bool htab_erase(htab_t * t, htab_key_t key) {
             }
             temp->next = NULL;
             free(temp);
+
+            t->size --; // decrement the number of records in hash table
             return true;
         } else {
             prev = temp;

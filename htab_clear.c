@@ -14,5 +14,6 @@ void htab_clear(htab_t * t) {
             temp = next_item;
         }
     }
+    t->size = 0; // set number of records to 0
     
 }

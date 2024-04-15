@@ -38,5 +38,7 @@ htab_pair_t * htab_lookup_add(htab_t * t, htab_key_t key) {
     } else {
         previous->next = new_item; // set the previous item to point to new item
     }
+
+    t->size ++; //increment the number of records
     return &new_item->pair;
 }
