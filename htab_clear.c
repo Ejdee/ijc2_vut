@@ -10,9 +10,9 @@ void htab_clear(htab_t * t) {
 
         while(temp != NULL) {
             next_item = temp->next;
-            temp->next = NULL;
-            free(temp);
+            htab_erase(t, temp->pair.key);
             temp = next_item;
         }
     }
+    
 }

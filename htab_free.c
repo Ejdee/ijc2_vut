@@ -4,8 +4,6 @@
 #include "htab_struct.h"
 
 void htab_free(htab_t * t) {
-    for(int i = 0; i < t->arr_size; i++) {
-        free(t->ptr[i]);
-    }
+    htab_clear(t);
     free(t);
 }
