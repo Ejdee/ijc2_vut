@@ -14,3 +14,4 @@ htab_statistics.o: htab_statistics.c htab_struct.h htab.h htab_item.h
 io.o: io.c io.h
 io_test.o: io_test.c io.h
 tail.o: tail.c error.h
+wordcount.o: wordcount.c htab.h io.h

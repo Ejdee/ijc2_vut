@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -g -std=c11 -pedantic -Wall -Wextra -fPIC
-EXECUTABLE = tail htab_main io_test
+EXECUTABLE = tail htab_main io_test wordcount
 HTAB_OBJECTS = htab_init.o htab_size.o htab_bucket_size.o htab_find.o htab_lookup_add.o htab_hash_function.o htab_erase.o htab_free.o htab_clear.o htab_statistics.o htab_for_each.o
 
 all: $(EXECUTABLE) libhtab.a libhtab.so
@@ -10,6 +10,9 @@ libhtab.a: $(HTAB_OBJECTS)
 
 libhtab.so: $(HTAB_OBJECTS)
 	$(CC) -shared -fPIC $^ -o $@
+
+wordcount: wordcount.o $(HTAB_OBJECTS) io.o
+	$(CC) $(CFLAGS) -o $@ $^
 
 tail: tail.o error.o
 	$(CC) $(CFLAGS) -o $@ $^
