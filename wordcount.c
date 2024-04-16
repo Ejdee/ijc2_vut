@@ -7,7 +7,7 @@
 #include "htab_struct.h"
 #include "htab_item.h"
 
-#define HASH_SIZE 12451
+#define HASH_SIZE 242857
 #define MAX_LENGTH_WORD 255
 
 
