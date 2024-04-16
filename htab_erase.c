@@ -16,6 +16,8 @@ bool htab_erase(htab_t * t, htab_key_t key) {
                 prev->next = temp->next;
             }
             temp->next = NULL;
+            
+            free((char*)temp->pair.key); // free allocated char for new key
             free(temp);
 
             t->size --; // decrement the number of records in hash table
