@@ -28,12 +28,13 @@ htab_pair_t * htab_lookup_add(htab_t * t, htab_key_t key) {
     }
 
     // create new variable so hash table does not store one and the same as we pass more keys
-    char *new_key = malloc(strlen(key)+1 * sizeof(char));
+    char *new_key = malloc((strlen(key)+1) * sizeof(char));
     if(new_key == NULL) {
         fprintf(stderr, "Allocation of new item was not succesfull.\n");
+        free(new_item);
         return NULL;
     }
-    strncpy(new_key, key, strlen(key) + 1);
+    strcpy(new_key, key);
     new_item->pair.key = new_key;
 
     new_item->pair.value = 1; // set the value to 1

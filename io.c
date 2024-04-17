@@ -13,6 +13,7 @@ int read_word(char *s, int max, FILE *f) {
         position++;
         c = getc(f);
     } 
+
     s[position] = '\0';
 
     while(!isspace(c) && c != EOF) {

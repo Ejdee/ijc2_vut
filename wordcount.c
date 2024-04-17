@@ -4,10 +4,8 @@
 #include <stdlib.h>
 #include "htab.h"
 #include "io.h"
-#include "htab_struct.h"
-#include "htab_item.h"
 
-#define HASH_SIZE 242857
+#define HASH_SIZE 1000
 #define MAX_LENGTH_WORD 255
 
 
@@ -17,6 +15,10 @@ void print_pair(htab_pair_t *data) {
 
 int main() {
     htab_t *table = htab_init(HASH_SIZE);
+    if(table == NULL) {
+        fprintf(stderr, "A word is longer than 254 characters, cutting.\n");
+        return 1;
+    }
 
     bool warning = false;
     char string[MAX_LENGTH_WORD];
