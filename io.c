@@ -1,5 +1,22 @@
+/* io.c
+ * Solution IJC-DU2, task b)
+ * Author: Adam Běhoun, FIT
+ * Date: 17.4.2024
+ * login: xbehoua00
+ * Compiled: gcc (GCC) 10.5.0
+*/
+
+
 #include "io.h"
 
+/**
+ * @brief read a single word and return the number of successfuly read characters or EOF
+ * 
+ * @param s buffer to store the word
+ * @param max maximum number of characters that can be read
+ * @param f stream
+ * @return int number of successfuly read characters or EOF if it is end of the file
+ */
 int read_word(char *s, int max, FILE *f) {
     int c = getc(f);
 
@@ -7,6 +24,7 @@ int read_word(char *s, int max, FILE *f) {
         c = getc(f); // skip the isspace characters
     }
 
+    // read the word
     int position = 0;
     while(!isspace(c) && c != EOF && position < max) {
         s[position] = c;
@@ -14,7 +32,7 @@ int read_word(char *s, int max, FILE *f) {
         c = getc(f);
     } 
 
-    s[position] = '\0';
+    s[position] = '\0'; // add the null terminator character
 
     while(!isspace(c) && c != EOF) {
         c = getc(f); // skip the remaining characters
@@ -26,4 +44,4 @@ int read_word(char *s, int max, FILE *f) {
     }
 
     return position;
-}
+} // read_word

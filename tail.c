@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "error.h"
 #include <stdbool.h>
 
 #define MAX_LINE_SIZE 2047
@@ -51,7 +50,8 @@ cbuf* cbuf_create(int n) {
             cb->size = n;
         }
     } else {
-        error_exit("Failed to allocate cbuf structure.");
+        fprintf(stderr, "Failed to allocate cbuf structure.\n");
+        exit(1);
     }
 
     return cb;
@@ -88,8 +88,10 @@ void cbuf_put(cbuf *cb, char *line) {
  * @return char* line that is stored in read_index position
  */
 char* cbuf_get(cbuf *cb) {
-    if(cbuf_empty(cb))
-        error_exit("Buffer is empty.");
+    if(cbuf_empty(cb)){
+        fprintf(stderr, "Buffer is empty.\n");
+        exit(1);
+    }
 
     char *to_return = cb->lines[cb->rindex]; // store line at the read index in variable
     cb->rindex = (cb->rindex + 1) % cb->size; // increment read index
@@ -112,28 +114,35 @@ int main(int argc, char *argv[]) {
     int size = 10; // default number of lines we want to print out
     FILE *fp = stdin; // default stream
 
-    if(argc > 4)
-        error_exit("Wrong arguments.");
+    if(argc > 4) {
+        fprintf(stderr, "Wrong arguments.\n");
+        return 1;
+    }
 
     for(int i = 1; i < argc; i++) {
         if(strcmp("-n", argv[i]) == 0) {
             if(i+1 <= argc) { // check if i+1 argc exists
                 size = atoi(argv[i+1]);
 
-                if(size <= 0) // if -n argument is less or equal to 0
-                    error_exit("Option -n requires a number above 0.");
+                if(size <= 0){ // if -n argument is less or equal to 0
+                    fprintf(stderr, "Option -n requires a number above 0.\n");
+                    return 1;
+                }
 
                 i++;
             } else {
-                error_exit("Option -n requires argument.");
+                fprintf(stderr, "Option -n requires argument.\n");
+                return 1;
             }
         } else {
             if(fp != stdin) { // if we are supposed to change file name, but it is not stdin.. it was already changed and we throw error
-                error_exit("You cannot type in two files.");
+                fprintf(stderr, "You cannot type in two files.\n");
+                return 1;
             }
             fp = fopen(argv[i], "r");
             if(fp == NULL) {
-                error_exit("Failed to open file %s.", argv[i]);
+                fprintf(stderr, "Failed to open file %s.\n", argv[i]);
+                return 1;
             }
         }
     }

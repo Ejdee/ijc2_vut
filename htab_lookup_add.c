@@ -1,9 +1,25 @@
-// htab_lookup_add.c
+/* htab_lookup_add
+ * Solution IJC-DU2, task b)
+ * Author: Adam Běhoun, FIT
+ * Date: 17.4.2024
+ * login: xbehoua00
+ * Compiled: gcc (GCC) 10.5.0
+*/
+
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "htab_struct.h"
 
+/**
+ * @brief Search for record with key, and if it is found then returns pointer to it.
+ * If it is not found, create a new record with the key, and connect it to the hash table.
+ * 
+ * @param t hash table
+ * @param key key of the record
+ * @return htab_pair_t* pointer to the record
+ * @return NULL if something went wrong
+ */
 htab_pair_t * htab_lookup_add(htab_t * t, htab_key_t key) {
     
     // calculate the position using hash function and modulo
@@ -50,4 +66,4 @@ htab_pair_t * htab_lookup_add(htab_t * t, htab_key_t key) {
 
     t->size ++; //increment the number of records
     return &new_item->pair;
-}
+} // htab_lookup_add
