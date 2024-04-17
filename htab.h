@@ -46,4 +46,7 @@ void htab_free(htab_t * t);     // destruktor tabulky
 // výpočet a tisk statistik délky seznamů (min,max,avg) do stderr:
 void htab_statistics(const htab_t * t);
 
+float htab_load_factor(htab_t * t);
+htab_t * resize_hash_table(htab_t * t);
+
 #endif // HTAB_H__
