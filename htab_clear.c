@@ -10,9 +10,11 @@ void htab_clear(htab_t * t) {
 
         while(temp != NULL) {
             next_item = temp->next;
-            htab_erase(t, temp->pair.key);
+            free((char*)temp->pair.key);
+            free(temp);
             temp = next_item;
         }
+        t->ptr[i]=NULL;
     }
     t->size = 0; // set number of records to 0
     
