@@ -18,7 +18,7 @@ htab_t *htab_init(const size_t n) {
     table->size = 0;
     table->arr_size = n;
     
-    for(int i = 0; i < table->arr_size; i++) {
+    for(size_t i = 0; i < n; i++) {
         table->ptr[i] = NULL;
     } 
 
