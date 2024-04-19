@@ -21,11 +21,10 @@
 // Since we have a load factor of 0.9, which means that hash table will resize when it reaches
 // 90% of its capacity, i chose initial size of 100. It wont take too much memory for small inputs
 // and save a couple of resizing for larger inputs.
-#define HASH_SIZE 100
-#define LOAD_FACTOR 0.9
+#define HASH_SIZE 24533
 
 // maximum length of read word
-#define MAX_LENGTH_WORD 255
+#define MAX_LENGTH_WORD 256
 
 
 /**
@@ -44,12 +43,12 @@ int main() {
     char string[MAX_LENGTH_WORD];
     int length = 0;
 
-    while((length = read_word(string, MAX_LENGTH_WORD-1, stdin)) != EOF) {
+    while((length = read_word(string, MAX_LENGTH_WORD, stdin)) != EOF) {
 
         // if a word is longer that MAX_LENGTH_WORD and a warning has not beed printed out yet,
         // we print it out and set flag so we dont print it out anymore.
-        if(length > MAX_LENGTH_WORD && !warning) {
-            fprintf(stderr, "A word is longer than 254 characters, cutting.\n");
+        if(length > MAX_LENGTH_WORD-1 && !warning) {
+            fprintf(stderr, "A word is longer than 255 characters, cutting.\n");
             warning = true;
         }
 
@@ -60,11 +59,6 @@ int main() {
             fprintf(stderr, "Error: new_item allocation.\n");
             htab_free(table);
             return 1;
-        }
-
-        // check the load factor, if we need to resize hash table
-        if(htab_load_factor(table) > LOAD_FACTOR) {
-            table = resize_hash_table(table);
         }
     }
 

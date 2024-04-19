@@ -24,9 +24,13 @@ int read_word(char *s, int max, FILE *f) {
         c = getc(f); // skip the isspace characters
     }
 
+    if(c == EOF) {
+        return -1;
+    }
+
     // read the word
     int position = 0;
-    while(!isspace(c) && c != EOF && position < max) {
+    while(!isspace(c) && c != EOF && position < max-1) {
         s[position] = c;
         position++;
         c = getc(f);
@@ -37,10 +41,6 @@ int read_word(char *s, int max, FILE *f) {
     while(!isspace(c) && c != EOF) {
         c = getc(f); // skip the remaining characters
         position ++; // increment the position so we can detect that we cut the word
-    }
-
-    if(c == EOF) {
-        return -1;
     }
 
     return position;
