@@ -1,12 +1,12 @@
 CC = gcc
-CFLAGS = -g -std=c11 -pedantic -Wall -Wextra -fPIC
+CFLAGS = -g -std=c11 -pedantic -Wall -Wextra -fPIC -O2
 LDFLAGS =
 EXECUTABLE = tail wordcount wordcount-dynamic
-HTAB_OBJECTS = htab_init.o htab_size.o htab_bucket_size.o htab_find.o htab_lookup_add.o htab_hash_function.o htab_erase.o htab_free.o htab_clear.o htab_statistics.o htab_for_each.o htab_resize.o htab_load_factor.o htab_prime.o
+HTAB_OBJECTS = htab_init.o htab_size.o htab_bucket_size.o htab_find.o htab_lookup_add.o htab_hash_function.o htab_erase.o htab_free.o htab_clear.o htab_statistics.o htab_for_each.o
 
 #LDFLAGS += -fsanitize=address
 #CFLAGS += -fsanitize=address
-CFLAGS += -DSTATISTICS
+#CFLAGS += -DSTATISTICS
 
 
 all: $(EXECUTABLE) libhtab.a libhtab.so
