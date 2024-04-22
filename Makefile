@@ -12,8 +12,9 @@ HTAB_OBJECTS = htab_init.o htab_size.o htab_bucket_size.o htab_find.o htab_looku
 all: $(EXECUTABLE) libhtab.a libhtab.so
 
 run: all
-	./wordcount < /usr/share/dict/words
-	LD_LIBRARY_PATH=. ./wordcount-dynamic < /usr/share/dict/words
+	./wordcount < io.h
+	LD_LIBRARY_PATH=. ./wordcount-dynamic < io.h
+	./tail -n 5 wordcount.c
 
 libhtab.a: $(HTAB_OBJECTS)
 	ar crs $@ $^
@@ -35,5 +36,9 @@ tail: tail.o
 
 clean:
 	rm -f *.o $(EXECUTABLE) *.a *.so
+
+zip:
+	zip xbehoua00.zip *.c *.cc *.h Makefile deps
+
 
 -include deps

@@ -12,16 +12,12 @@
 #include "htab.h"
 #include "io.h"
 
-// Since we do not know actual size of input data, I decided to implement
-// dynamic resizing of hash table. 
-// According to "Data Structures and Algorithm Analysis in C++" by Mark Allen Weis, for separate chaining hashing,
-// the load factor should be close to 1 for the best performance.
-// After some tests, the load factor of 0.9 worked best for inputs of variable sizes.
-
-// Since we have a load factor of 0.9, which means that hash table will resize when it reaches
-// 90% of its capacity, i chose initial size of 100. It wont take too much memory for small inputs
-// and save a couple of resizing for larger inputs.
-#define HASH_SIZE 24533
+// The hash table size should be a prime number to reduce collisions. 
+// Since we don't know the exact size of the input, we have to choose a size that
+// will be compromise between memory usage and efficiency. After testing inputs with
+// one million unique words and small input with ~100 words, table size of 30089 worked
+// well.
+#define TABLE_SIZE 30089
 
 // maximum length of read word
 #define MAX_LENGTH_WORD 256
@@ -37,7 +33,7 @@ void print_pair(htab_pair_t *data) {
 }
 
 int main() {
-    htab_t *table = htab_init(HASH_SIZE);
+    htab_t *table = htab_init(TABLE_SIZE);
 
     bool warning = false;
     char string[MAX_LENGTH_WORD];
